@@ -5,19 +5,26 @@ class IngresoDB:
         try:
             self.conn = sqlite3.connect(ruta_db)
             self.cursor = self.conn.cursor()
-        except sqlite3.Error as error:
+        except sqlite3.DatabaseError as error:
             print(f'Error inesperado en la base de datos : {error}.')
+            return
     
     def cierre_db(self):
-        self.conn.close()
-        print('Cierre de la base de datos exitoso.')
+        try:
+            self.conn.close()
+            print('Cierre de la base de datos exitoso.')
+        except sqlite3.OperationalError as error:
+            print(f'Error de opreacion en la base de datos : {error}.')
 
 class IngresoImpuesto:
     def __init__(self,conexion):
-        self.conexion = conexion
-        if not self.conexion:
-            print('No se encontro conexion con la base de datos.')
-            return
+        try:
+            self.conexion = conexion
+            if not self.conexion:
+                print('No se encontro conexion con la base de datos.')
+                return
+        except sqlite3.OperationalError as error:
+            print(f'Error operacional en la base de datos : {error}')
         
     def impuesto_anual(self):
         impuesto = float(input('Ingresa el impuesto ya calculado: '))

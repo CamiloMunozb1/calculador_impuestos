@@ -1,5 +1,6 @@
 from funciones.calculadora_impuestos import operacion_impuestos
 from funciones.ingreso_impuesto import IngresoDB, IngresoImpuesto
+from funciones.mostrar_impuestos import IngresoDB, MostrarDatos
 from dotenv import load_dotenv
 import os
 
@@ -25,7 +26,8 @@ while True:
             guardado = IngresoImpuesto(conexion)
             guardado.impuesto_anual()
         elif usuario == '3':
-            print('Opcion futura')
+            mostrar = MostrarDatos(conexion)
+            mostrar.impuestos_visibles()
         elif usuario == '4':
             print('Gracias por visitar y registar sus impuestos.')
             break
